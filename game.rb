@@ -2,8 +2,8 @@
 
 # Mastermind object
 class Mastermind
-  def initialize
-    @board = '1234'
+  def initialize(input)
+    @board = input == '1' ? read_code : generate_code
   end
 
   def player_guess(guess)
@@ -15,6 +15,31 @@ class Mastermind
   end
 
   private
+
+  def read_code
+    puts 'Enter 4 digit code. Each digit from 1-6'
+    code = gets.chomp!
+    until valid_code?(code)
+      puts 'Invalid code. Try again'
+      code = gets.chomp!
+    end
+    code
+  end
+
+  def generate_code
+    res = ''
+    4.times do
+      res += rand(1..6).to_s
+    end
+    res
+  end
+
+  def valid_code?(code)
+    return false if code.length != 4
+
+    code.each_char { |num| return false if num.to_i > 6 || num.to_i < 1 }
+    true
+  end
 
   def exact_matches(guess, arr)
     res = ''
@@ -38,6 +63,3 @@ class Mastermind
     res
   end
 end
-
-game = Mastermind.new
-p game.player_guess(4344)
