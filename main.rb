@@ -22,5 +22,16 @@ def read_input
   input
 end
 
-start_text
-game = Mastermind.new(read_input)
+
+def play
+  start_text
+  mode = read_input.to_i
+  game = Mastermind.new(mode)
+  mode == 1 ? game.computer_action : game.human_action
+  puts 'play again? (y/n)'
+  input = gets.chomp!.downcase
+  self.play if input == 'y'
+end
+
+
+play()

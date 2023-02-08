@@ -3,8 +3,23 @@
 # Mastermind object
 class Mastermind
   def initialize(input)
-    @board = input == '1' ? read_code : generate_code
+    @the_code = input == 1 ? read_code : generate_code
   end
+
+  def human_action
+    guesses_left = 12
+    is_ended = false
+    until is_ended || guesses_left.zero?
+      res = player_guess(read_code)
+      puts res
+      is_ended = true if res == '🟢🟢🟢🟢'
+      guesses_left -= 1
+      puts "Guesses left: #{guesses_left}"
+    end
+    puts is_ended ? 'YOU WIN!!!!' : "you lose :( \n the code was #{@the_code}"
+  end
+
+  private
 
   def player_guess(guess)
     guess = guess.to_s
@@ -13,8 +28,6 @@ class Mastermind
     res += wrong_position(guess, arr)
     res
   end
-
-  private
 
   def read_code
     puts 'Enter 4 digit code. Each digit from 1-6'
@@ -44,7 +57,7 @@ class Mastermind
   def exact_matches(guess, arr)
     res = ''
     guess.each_char.with_index do |color, i|
-      if @board[i] == color
+      if @the_code[i] == color
         res += '🟢'
         arr[color.to_i] = 1
       end
@@ -55,7 +68,7 @@ class Mastermind
   def wrong_position(guess, arr)
     res = ''
     guess.each_char do |color|
-      if @board.include?(color) && arr[color.to_i] != 1
+      if @the_code.include?(color) && arr[color.to_i] != 1
         res += '🟠'
         arr[color.to_i] = 1
       end
