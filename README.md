@@ -14,7 +14,7 @@ In this project, I have implemented a Ruby version of the popular board game, Ma
 
 ### Screenshots
 
-![Screenshot of Mastermind game](/screenshots/codemaker.png "Mastermind game screenshot")
+![Screenshot of Mastermind game](/screenshots/codemaker.PNG "Mastermind game screenshot")
 
 ### How to Play
 
