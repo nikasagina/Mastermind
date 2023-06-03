@@ -34,11 +34,12 @@ class Mastermind
   end
 
   def computer_mode
+    puts 'BING'
     guesses_left = 12
     is_ended = false
     res = ''
-    @all_possible = generate_all_codes
     current_guess = '1122' # initial guess
+    puts 'BONG'
 
     until is_ended
       puts "Guesses left: #{guesses_left}"

@@ -5,25 +5,41 @@ class ComputerPlayer
   def initialize(code_evaluator, code_generator)
     @code_evaluator = code_evaluator
     @code_generator = code_generator
+    @all_possible = generate_all_codes
   end
 
   def make_guess(previous_guess, previous_result)
     delete_impossibles(previous_guess, previous_result)
-    @all_possible[0]
+
+    min_score = Float::INFINITY
+    next_guess = ''
+
+    @all_possible.each do |code|
+      score = calculate_score(code)
+      if score < min_score
+        min_score = score
+        next_guess = code
+      end
+    end
+
+    next_guess
   end
 
   private
 
   def delete_impossibles(guess, res)
-    new_array = []
-    @all_possible.each do |elem|
-      new_array << elem if possible?(elem, guess, res)
-    end
-    @all_possible = new_array
+    @all_possible.delete_if { |elem| @code_evaluator.evaluate_guess(elem, guess) != res }
   end
 
-  def possible?(elem, guess, res)
+  def calculate_score(code)
+    scores = Hash.new(0)
 
+    @all_possible.each do |possible_code|
+      score = @code_evaluator.evaluate_guess(code, possible_code)
+      scores[score] += 1
+    end
+
+    scores.values.max
   end
 
   def generate_all_codes
@@ -39,6 +55,5 @@ class ComputerPlayer
       end
     end
     res
-
   end
 end
