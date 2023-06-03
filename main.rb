@@ -12,13 +12,13 @@ def start_text
   puts '🟠: - Right Number Wrong Position'
   puts '🟢: - Right Number Right Position'
   puts
-  puts 'Enter your choice: '
+  print 'Enter your choice: '
 end
 
 def read_input
   input = gets.chomp
   until %w[1 2].include?(input)
-    puts 'Invalid input, enter 1 for code maker, 2 for code breaker: '
+    print 'Invalid input, enter 1 for code maker, 2 for code breaker: '
     input = gets.chomp
   end
   input
